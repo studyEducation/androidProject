@@ -13,3 +13,8 @@ captures/
 .idea/
 *~
 *.swp
+gradlew
+gradlew.bat
+androidTest/
+test/
+gradle-wrapper.jar
