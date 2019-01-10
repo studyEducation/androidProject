@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.graphics.Paint
 import android.media.ExifInterface
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.net.Uri
 import android.text.TextUtils
 import android.widget.TextView
@@ -19,6 +21,24 @@ class Utils {
 
 
     companion object {
+
+
+        fun isUseNetwork(context: Context) : Boolean {
+
+            var connectivity : ConnectivityManager? = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+
+            if(connectivity == null)
+                return false
+
+            else{
+                var networkInfo : NetworkInfo = connectivity.activeNetworkInfo
+
+                if(networkInfo.state == NetworkInfo.State.CONNECTED)
+                    return true
+            }
+
+            return false
+        }
 
         /**
          * 비밀번호 유효성 체크
