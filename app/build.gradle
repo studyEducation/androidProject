@@ -1,11 +1,22 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
+
+
+
+    signingConfigs {
+        config {
+            keyAlias 'momento'
+            keyPassword 'momento123!@#'
+            storeFile file('../keyfile/momento.jks')
+            storePassword 'momento123!@#'
+        }
+    }
+
 
     defaultConfig {
         applicationId "com.study.android.studyeduproject"
@@ -18,12 +29,23 @@ android {
         multiDexEnabled true
 
     }
+
     buildTypes {
+
+        debug{
+            minifyEnabled false
+            signingConfig signingConfigs.config
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+kapt {
+    generateStubs = true
 }
 
 dependencies {
@@ -50,7 +72,13 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
-    // 버터나이프
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    // 버터 나이프 대체용으로 코틀린에서 제공해주는 extensions
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.ext.kotlin_version"
+
+    // 카카오 로그인 sdk를 사용하기 위해 필요.
+    implementation group: 'com.kakao.sdk', name: 'usermgmt', version: '1.16.0'
+
+    // 페이스북
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
 }
