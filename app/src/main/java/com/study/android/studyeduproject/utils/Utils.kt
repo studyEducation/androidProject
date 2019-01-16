@@ -1,6 +1,7 @@
 package com.study.android.studyeduproject.utils
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -11,10 +12,14 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.Uri
 import android.text.TextUtils
+import android.util.Log
 import android.widget.TextView
+import com.kakao.util.helper.Utility
 import java.util.regex.Pattern
 
 import java.io.ByteArrayOutputStream
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 import java.text.DecimalFormat
 
 class Utils {
@@ -22,7 +27,9 @@ class Utils {
 
     companion object {
 
-
+        /**
+         * 네트워크 상태 체크
+         */
         fun isUseNetwork(context: Context) : Boolean {
 
             var connectivity : ConnectivityManager? = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
@@ -110,6 +117,9 @@ class Utils {
             return m.matches()
         }
 
+        /**
+         * 요구되는 화면에 맞는 적절한 bitmap 사이즈 반환하기
+         */
         fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
 
             val height = options.outHeight
@@ -128,6 +138,10 @@ class Utils {
             return inSampleSize
         }
 
+
+        /**
+         * 받은 bitmap 회전값을 보고 회전시키기
+         */
         fun rotate(ei: ExifInterface, bitmap: Bitmap, quality: Int): Bitmap {
             var bitmap = bitmap
 
@@ -237,6 +251,25 @@ class Utils {
                     sb.append("\n")
             } while (end > 0)
             return if (TextUtils.isEmpty(sb.toString())) text else sb.toString()
+        }
+
+
+        /**
+         * 카카오 키 해쉬값 적용을 위한 키 해쉬값 확인용 함수
+         */
+        fun getKeyHash(context: Context): String? {
+            val packageInfo = Utility.getPackageInfo(context, PackageManager.GET_SIGNATURES) ?: return null
+            for (signature in packageInfo!!.signatures) {
+                try {
+                    val md = MessageDigest.getInstance("SHA")
+                    md.update(signature.toByteArray())
+                    return android.util.Base64.encodeToString(md.digest(), android.util.Base64.NO_WRAP)
+                } catch (e: NoSuchAlgorithmException) {
+                    Log.w("Login", "Unable to get MessageDigest. signature=$signature", e)
+                }
+
+            }
+            return null
         }
     }
 

@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">studyEduProject</string>
+    <string name="app_name">Momento</string>
+
+    <string name="kakao_app_key">2ae02e1201241a46d10b0596bb9044d1</string>
+    <string name="kakao_app_secret_key">27dQATm1zvMrrV1BwDZLGoHGZLRYLY97</string>
+
 </resources>
