@@ -3,7 +3,7 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".MomentoApplication"
@@ -17,13 +17,17 @@
         <!-- 카카오 키 설정 -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key" />
+            android:value="@string/kakao_app_key"/>
 
         <!-- 카카오에서 제공한 보안 강화를 위한 키 설정 -->
         <meta-data
             android:name="com.kakao.sdk.ClientSecret"
             android:value="@string/kakao_app_secret_key"/>
 
+        <!-- 페이스북 키 설정 -->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
 
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
@@ -37,6 +41,28 @@
         <activity android:name=".activity.BaseActivity"/>
 
 
+
+        <!-- 페이스북 화면 설정 -->
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"/>
+
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="@string/fb_login_protocol_scheme"/>
+            </intent-filter>
+        </activity>
+        <!-- 페이스북 화면 설정 -->
+
+        <!-- 카카오 화면 설정 -->
         <activity
             android:name="com.kakao.auth.authorization.authcode.KakaoWebViewActivity"
             android:launchMode="singleTop"
@@ -47,6 +73,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <!-- 카카오 화면 설정 -->
 
     </application>
 

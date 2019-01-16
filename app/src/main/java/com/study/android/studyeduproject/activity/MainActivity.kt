@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.facebook.login.LoginManager
 import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.LogoutResponseCallback
 import com.study.android.studyeduproject.R
@@ -28,5 +29,11 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this@MainActivity, "Kakao logout Complete", Toast.LENGTH_SHORT).show()
         }
 
+
+        facebook_logout.setOnClickListener {
+            LoginManager.getInstance().logOut()
+
+            Toast.makeText(this@MainActivity, "Facebook logout Complete", Toast.LENGTH_SHORT).show()
+        }
     }
 }
