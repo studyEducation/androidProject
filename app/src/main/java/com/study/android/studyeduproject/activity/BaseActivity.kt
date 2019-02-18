@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.facebook.FacebookSdk
 import com.study.android.studyeduproject.MomentoApplication
+import com.study.android.studyeduproject.utils.Utils
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -16,5 +17,13 @@ open class BaseActivity : AppCompatActivity() {
     }
 
 
+    override fun onResume() {
+        super.onResume()
 
+        // 네트워크 연결 상태 좋지 않음
+        if(!Utils.isUseNetwork(this)){
+
+        }
+
+    }
 }
